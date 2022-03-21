@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/opus": "^0.7.0",
+    "@discordjs/rest": "^0.3.0",
+    "@discordjs/voice": "^0.8.0",
+    "@kyometori/djsmusic": "^0.8.2",
+    "discord-api-types": "^0.29.0",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "ffmpeg-static": "^5.0.0",
+    "libsodium-wrappers": "^0.7.9"
+  },
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ggsilva28/discord-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ggsilva28/discord-bot/issues"
+  },
+  "homepage": "https://github.com/ggsilva28/discord-bot#readme",
+  "description": ""
+}
