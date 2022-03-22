@@ -29,6 +29,6 @@
     "node": "16.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node bot.js"
   }
 }
