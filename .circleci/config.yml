@@ -13,9 +13,9 @@ jobs:
             install-yarn: true
             node-version: '16.13'
         - run: node --version
-        - build: npm run build
+        - npm-run-build: npm run build
 
 workflows:
-  test_my_app:
+  deploy:
     jobs:
       - install-node-example
