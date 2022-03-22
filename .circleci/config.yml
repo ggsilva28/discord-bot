@@ -6,5 +6,8 @@ version: 2.1 # using 2.1 provides access to orbs and other features
 workflows:
   run-npm-command:
     jobs:
+      - node/install:
+          install-yarn: true
+          node-version: '16.13'
       - node/run:
           npm-run: build
