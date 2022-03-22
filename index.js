@@ -42,7 +42,7 @@ client.on("messageCreate", async (message) => {
 			console.log("Error playing audio", err);
 		});
 
-		const path = __dirname + "\\assets\\" +  getRandomMessage(audios)
+		const path = __dirname + "/assets/" +  getRandomMessage(audios)
 		console.log(path)
 		bot.resource = createAudioResource(path);
 		bot.player.play(bot.resource);
@@ -72,7 +72,7 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
 	if (oldState.member.user.bot) return;
 
 	if (newState.channelId) {
-		bot.resource = createAudioResource(__dirname + "\\assets\\" +  getRandomMessage(audios));
+		bot.resource = createAudioResource(__dirname + "/assets/" +  getRandomMessage(audios));
 		bot.player.play(bot.resource);
 
 		bot.subscription = bot.connection.subscribe(bot.player);
