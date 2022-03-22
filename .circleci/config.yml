@@ -3,8 +3,19 @@ orbs: # declare what orbs we are going to use
 
 version: 2.1 # using 2.1 provides access to orbs and other features
 
+jobs:
+  install-node-example:
+      docker:
+        - image: 'cimg/base:stable'
+      steps:
+        - checkout
+        - node/install:
+            install-yarn: true
+            node-version: '16.13'
+        - run: node --version
+        - npm-run: build
+
 workflows:
-  run-npm-command:
+  test_my_app:
     jobs:
-      - node/run:
-          npm-run: build
+      - install-node-example
