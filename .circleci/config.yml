@@ -1,10 +1,10 @@
 orbs: # declare what orbs we are going to use
-  node: circleci/node@2.0.2 # the node orb provides common node-related configuration
+  node: circleci/node@5.0.1
 
 version: 2.1 # using 2.1 provides access to orbs and other features
 
 workflows:
-  matrix-tests:
+  run-npm-command:
     jobs:
-      - node/test:
-          version: 16.9.0
+      - node/run:
+          npm-run: build
