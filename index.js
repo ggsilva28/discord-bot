@@ -42,7 +42,9 @@ client.on("messageCreate", async (message) => {
 			console.log("Error playing audio", err);
 		});
 
-		bot.resource = createAudioResource(__dirname + "\\assets\\" +  getRandomMessage(audios));
+		const path = __dirname + "\\assets\\" +  getRandomMessage(audios)
+		console.log(path)
+		bot.resource = createAudioResource(path);
 		bot.player.play(bot.resource);
 
 		const voiceChannel = message.member.voice.channel;
