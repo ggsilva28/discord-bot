@@ -1,9 +1,10 @@
 const { Client, Intents } = require("discord.js");
 const { generateDependencyReport, joinVoiceChannel, createAudioPlayer, createAudioResource, NoSubscriberBehavior, AudioPlayerStatus } = require("@discordjs/voice");
 const { createMusicManager } = require("@kyometori/djsmusic");
-const { token, guildId } = require("./config.json");
 
 const bot = {};
+
+const token = process.env.DISCORD_TOKEN
 
 const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES]
