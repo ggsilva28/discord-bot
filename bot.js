@@ -16,7 +16,7 @@ const errosMessages = {
 	channel: ["Burrão tu ein, entra num canal de voz ai.", "ENTRA NUM CANAL DE VOZ!!!!!!!", "SE NUM TA NUM CANAL DE VOZ!", "Entra na call ae", "Entra que eu entro"]
 };
 
-const audios = ["eae_by_leleco.ogg", "bao_by_rafa.ogg", "eae.ogg", "zap.mp3"];
+const audios = ["eae_by_leleco.ogg", "bao_by_rafa.ogg", "eae.ogg"];
 
 const getRandomMessage = (messages) => {
 	return messages[Math.floor(Math.random() * messages.length)];
