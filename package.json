@@ -29,6 +29,6 @@
     "node": "16.x"
   },
   "scripts": {
-    "build": "node bot.js"
+    "start": "node server.js"
   }
 }

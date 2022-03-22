@@ -1,13 +1,7 @@
-orbs: # declare what orbs we are going to use
-  node: circleci/node@5.0.1
-
-version: 2.1 # using 2.1 provides access to orbs and other features
-
+version: 2.1
+orbs:
+  heroku: circleci/heroku@1.2.6
 workflows:
-  run-npm-command:
+  heroku_deploy:
     jobs:
-      - node/install:
-          install-yarn: true
-          node-version: '16.13'
-      - node/run:
-          npm-run: build
+      - heroku/deploy-via-git
