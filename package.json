@@ -1,4 +1,18 @@
 {
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ggsilva28/discord-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ggsilva28/discord-bot/issues"
+  },
+  "homepage": "https://github.com/ggsilva28/discord-bot#readme",
+  "description": "",
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
     "@discordjs/opus": "^0.7.0",
@@ -11,22 +25,10 @@
     "ffmpeg-static": "^5.0.0",
     "libsodium-wrappers": "^0.7.9"
   },
-  "name": "discord-bot",
-  "version": "1.0.0",
-  "node": "16.9.0",
-  "main": "app.js",
+  "engine":{
+    "node": "16.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ggsilva28/discord-bot.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ggsilva28/discord-bot/issues"
-  },
-  "homepage": "https://github.com/ggsilva28/discord-bot#readme",
-  "description": ""
+  }
 }
