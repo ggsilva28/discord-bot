@@ -1,10 +1,11 @@
 const { Client, Intents } = require("discord.js");
 const { generateDependencyReport, joinVoiceChannel, createAudioPlayer, createAudioResource, NoSubscriberBehavior, AudioPlayerStatus } = require("@discordjs/voice");
 const { createMusicManager } = require("@kyometori/djsmusic");
+const fs = require("fs");
 
 const bot = {};
 
-const token = process.env.DISCORD_TOKEN
+const token = process.env.DISCORD_TOKEN;
 
 const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_VOICE_STATES]
@@ -17,7 +18,9 @@ const errosMessages = {
 	channel: ["Burrão tu ein, entra num canal de voz ai.", "ENTRA NUM CANAL DE VOZ!!!!!!!", "SE NUM TA NUM CANAL DE VOZ!", "Entra na call ae", "Entra que eu entro"]
 };
 
-const audios = ["eae_by_leleco.ogg", "bao_by_rafa.ogg", "eae.ogg"];
+fs.readdir("assets", (err, files) => {
+	bot.audios = files
+});
 
 const getRandomMessage = (messages) => {
 	return messages[Math.floor(Math.random() * messages.length)];
@@ -42,8 +45,7 @@ client.on("messageCreate", async (message) => {
 			console.log("Error playing audio", err);
 		});
 
-		const path = __dirname + "/assets/" +  getRandomMessage(audios)
-		console.log(path)
+		const path = __dirname + "/assets/" + getRandomMessage(bot.audios);
 		bot.resource = createAudioResource(path);
 		bot.player.play(bot.resource);
 
@@ -72,7 +74,9 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
 	if (oldState.member.user.bot) return;
 
 	if (newState.channelId) {
-		bot.resource = createAudioResource(__dirname + "/assets/" +  getRandomMessage(audios));
+		const path = __dirname + "/assets/" + getRandomMessage(bot.audios);
+		console.log(path)
+		bot.resource = createAudioResource(path);
 		bot.player.play(bot.resource);
 
 		bot.subscription = bot.connection.subscribe(bot.player);
