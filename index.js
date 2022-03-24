@@ -84,6 +84,7 @@ client.on("messageCreate", async (message) => {
 
 		const audio = content.split(" ");
 		if (audio.length > 1) {
+			if(!bot.audios.includes(audio[1])) return message.channel.send(getRandomMessage(errosMessages.not_found));
 			return playAudio(audio[1] + ".ogg");
 		}
 
