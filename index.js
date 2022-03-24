@@ -15,19 +15,43 @@ const successMessages = {
 	channel: ["To entrando", "Colando", "Ja chego", "Cheguei piranhas", "To on", "Quem cola", "Salve", "Opa bão"]
 };
 const errosMessages = {
-	channel: ["Burrão tu ein, entra num canal de voz ai.", "ENTRA NUM CANAL DE VOZ!!!!!!!", "SE NUM TA NUM CANAL DE VOZ!", "Entra na call ae", "Entra que eu entro"]
+	channel: ["Burrão tu ein, entra num canal de voz ai.", "ENTRA NUM CANAL DE VOZ!!!!!!!", "SE NUM TA NUM CANAL DE VOZ!", "Entra na call ae", "Entra que eu entro"],
+	require: ["PRIMEIRO SE ME CUMPRIMENTA", "Cade a educação", "Dormiu comigo?", "EAE?", "Cade aquele eae maroto", "MANDA O BRABO"],
+	not_found: ["Sei la do que se ta falando", "Achei isso ai nao", "Que isso ai?", "Nao entendi", "É pra advinha?", "Não leio mentes não amigão"]
 };
 
 fs.readdir("assets", (err, files) => {
-	bot.audios = files
+	bot.audios = files;
 });
 
 const getRandomMessage = (messages) => {
 	return messages[Math.floor(Math.random() * messages.length)];
 };
 
+const playAudio = (audio = getRandomMessage(bot.audios)) => {
+	const path = __dirname + "/assets/" + audio;
+	console.log(path);
+	bot.resource = createAudioResource(path);
+	bot.player.play(bot.resource);
+
+	bot.subscription = bot.connection.subscribe(bot.player);
+	if (bot.subscription) {
+		setTimeout(() => bot.subscription.unsubscribe(), 15_000);
+	}
+};
+
 client.on("ready", () => {
 	createMusicManager(client);
+	bot.player = createAudioPlayer();
+
+	bot.player.on(AudioPlayerStatus.Playing, () => {
+		console.log("Solta o som");
+	});
+
+	bot.player.on("error", (err) => {
+		console.log("Vish", err);
+	});
+
 	console.log("ta rodando que é uma beleza");
 });
 
@@ -35,20 +59,6 @@ client.on("messageCreate", async (message) => {
 	const { content } = message;
 
 	if (content === "EAE") {
-		bot.player = createAudioPlayer();
-
-		bot.player.on(AudioPlayerStatus.Playing, () => {
-			console.log("Eae gordinho beleza");
-		});
-
-		bot.player.on("error", (err) => {
-			console.log("Error playing audio", err);
-		});
-
-		const path = __dirname + "/assets/" + getRandomMessage(bot.audios);
-		bot.resource = createAudioResource(path);
-		bot.player.play(bot.resource);
-
 		const voiceChannel = message.member.voice.channel;
 		if (!voiceChannel) return message.channel.send(getRandomMessage(errosMessages.channel));
 
@@ -59,14 +69,33 @@ client.on("messageCreate", async (message) => {
 		});
 
 		if (!bot.connection) {
-			message.reply("Deu ruim.");
+			return message.channel.send("Ih rapaz");
 		}
 		message.reply(getRandomMessage(successMessages.channel));
 
-		bot.subscription = bot.connection.subscribe(bot.player);
-		if (bot.subscription) {
-			setTimeout(() => bot.subscription.unsubscribe(), 15_000);
+		playAudio();
+	} else if (content.search("PLAY") > -1) {
+		const voiceChannel = message.member.voice.channel;
+		if (!voiceChannel) return message.channel.send(getRandomMessage(errosMessages.channel));
+
+		if (!bot.connection) {
+			return message.channel.send(getRandomMessage(errosMessages.require));
 		}
+
+		const audio = content.split(" ");
+		if (audio.length > 1) {
+			return playAudio(audio[1] + ".ogg");
+		}
+
+		return message.channel.send(getRandomMessage(errosMessages.not_found));
+	}else if(content === "AJUDA!!!"){
+		message.channel.send("Ta tendo isso aqui: ")
+		let list = ''
+		bot.audios.forEach(audio => {
+			list += audio.replace('.ogg', '') + '\n'
+		})
+
+		message.channel.send(list)
 	}
 });
 
@@ -74,16 +103,8 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
 	if (oldState.member.user.bot) return;
 
 	if (newState.channelId) {
-		const path = __dirname + "/assets/" + getRandomMessage(bot.audios);
-		console.log(path)
-		bot.resource = createAudioResource(path);
-		bot.player.play(bot.resource);
-
-		bot.subscription = bot.connection.subscribe(bot.player);
-		if (bot.subscription) {
-			setTimeout(() => bot.subscription.unsubscribe(), 15_000);
-		}
+		playAudio();
 	}
 });
 
-client.login(token);
+client.login("OTUyMjg0MTY5ODM5NDY0NDQ4.Yizxvg.wLK4wgiIsgY497O9h9StwQW8Pts");
