@@ -48,6 +48,7 @@ const matchAudioWithUser = (id) => {
 	const user = users.find((user) => user.id === id);
 
 	if (user) {
+		console.log(user.name, user.audio)
 		audio = user.audio;
 	}
 
