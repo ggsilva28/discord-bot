@@ -45,13 +45,10 @@ const playAudio = (audio = getRandomMessage(bot.audios)) => {
 
 const matchAudioWithUser = (id) => {
 	let audio = getRandomMessage(bot.audios);
-	const newSession = verifySessionId(id, bot.sessionId);
-	if (newSession) {
-		const user = users.find((user) => user.id === id);
+	const user = users.find((user) => user.id === id);
 
-		if (user) {
-			audio = user.audio;
-		}
+	if (user) {
+		audio = user.audio;
 	}
 
 	return audio;
@@ -136,7 +133,7 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
 	if (oldState.member.user.bot) return;
 
 	if (newState.channelId) {
-		console.log('sessionId', newState.sessionId);
+		console.log("sessionId", newState.sessionId);
 		if (!newState.streaming && !newState.selfMute && !newState.selfDeaf && !newState.suppress) {
 			setSessionId(newState.member.user.id, newState.sessionId);
 			playAudio(matchAudioWithUser(newState.id));
