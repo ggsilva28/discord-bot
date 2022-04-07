@@ -146,4 +146,4 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
 	}
 });
 
-client.login("OTUyMjg0MTY5ODM5NDY0NDQ4.Yizxvg.TyGYgTVXhIdxrOKTRAZ__AyR6gs");
+client.login(token);
