@@ -1,6 +1,5 @@
 const { Client, Intents } = require("discord.js");
 const { generateDependencyReport, joinVoiceChannel, createAudioPlayer, createAudioResource, NoSubscriberBehavior, AudioPlayerStatus } = require("@discordjs/voice");
-const { createMusicManager } = require("@kyometori/djsmusic");
 const fs = require("fs");
 
 const bot = {};
@@ -14,6 +13,7 @@ const client = new Client({
 const successMessages = {
 	channel: ["To entrando", "Colando", "Ja chego", "Cheguei piranhas", "To on", "Quem cola", "Salve", "Opa bão"]
 };
+
 const errosMessages = {
 	channel: ["Burrão tu ein, entra num canal de voz ai.", "ENTRA NUM CANAL DE VOZ!!!!!!!", "SE NUM TA NUM CANAL DE VOZ!", "Entra na call ae", "Entra que eu entro"],
 	require: ["PRIMEIRO SE ME CUMPRIMENTA", "Cade a educação", "Dormiu comigo?", "EAE?", "Cade aquele eae maroto", "MANDA O BRABO"],
@@ -41,7 +41,6 @@ const playAudio = (audio = getRandomMessage(bot.audios)) => {
 };
 
 client.on("ready", () => {
-	createMusicManager(client);
 	bot.player = createAudioPlayer();
 
 	bot.player.on(AudioPlayerStatus.Playing, () => {
