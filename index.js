@@ -1,6 +1,9 @@
 const { Client, Intents } = require("discord.js");
 const { generateDependencyReport, joinVoiceChannel, createAudioPlayer, createAudioResource, NoSubscriberBehavior, AudioPlayerStatus } = require("@discordjs/voice");
 const fs = require("fs");
+const { users } = require("./users.json");
+
+console.log("users", users);
 
 const bot = {};
 
@@ -40,6 +43,35 @@ const playAudio = (audio = getRandomMessage(bot.audios)) => {
 	}
 };
 
+const matchAudioWithUser = (id) => {
+	let audio = getRandomMessage(bot.audios);
+	const newSession = verifySessionId(id, bot.sessionId);
+	if (newSession) {
+		const user = users.find((user) => user.id === id);
+
+		if (user) {
+			audio = user.audio;
+		}
+	}
+
+	return audio;
+};
+
+const verifySessionId = (id, sessionId) => {
+	const user = users.find((user) => user.id === id);
+	if (user) {
+		return user.sessionId === sessionId;
+	}
+	return false;
+};
+
+const setSessionId = (id, sessionId) => {
+	const user = users.find((user) => user.id === id);
+	if (user) {
+		user.sessionId = sessionId;
+	}
+};
+
 client.on("ready", () => {
 	bot.player = createAudioPlayer();
 
@@ -70,9 +102,10 @@ client.on("messageCreate", async (message) => {
 		if (!bot.connection) {
 			return message.channel.send("Ih rapaz");
 		}
+
 		message.reply(getRandomMessage(successMessages.channel));
 
-		playAudio();
+		playAudio(matchAudioWithUser(message.author.id));
 	} else if (content.search("PLAY") > -1) {
 		const voiceChannel = message.member.voice.channel;
 		if (!voiceChannel) return message.channel.send(getRandomMessage(errosMessages.channel));
@@ -83,19 +116,19 @@ client.on("messageCreate", async (message) => {
 
 		const audio = content.split(" ");
 		if (audio.length > 1) {
-			if(!bot.audios.includes(audio[1] + ".ogg")) return message.channel.send(getRandomMessage(errosMessages.not_found));
+			if (!bot.audios.includes(audio[1] + ".ogg")) return message.channel.send(getRandomMessage(errosMessages.not_found));
 			return playAudio(audio[1] + ".ogg");
 		}
 
 		return message.channel.send(getRandomMessage(errosMessages.not_found));
-	}else if(content === "AJUDA!!!"){
-		message.channel.send("Ta tendo isso aqui: ")
-		let list = ''
-		bot.audios.forEach(audio => {
-			list += audio.replace('.ogg', '') + '\n'
-		})
+	} else if (content === "AJUDA!!!") {
+		message.channel.send("Ta tendo isso aqui: ");
+		let list = "";
+		bot.audios.forEach((audio) => {
+			list += audio.replace(".ogg", "") + "\n";
+		});
 
-		message.channel.send(list)
+		message.channel.send(list);
 	}
 });
 
@@ -103,8 +136,14 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
 	if (oldState.member.user.bot) return;
 
 	if (newState.channelId) {
-		playAudio();
+		console.log('sessionId', newState.sessionId);
+		if (!newState.streaming && !newState.selfMute && !newState.selfDeaf && !newState.suppress) {
+			setSessionId(newState.member.user.id, newState.sessionId);
+			playAudio(matchAudioWithUser(newState.id));
+		} else if (!newState.selfMute && !newState.selfDeaf) {
+			playAudio();
+		}
 	}
 });
 
-client.login(token);
+client.login("OTUyMjg0MTY5ODM5NDY0NDQ4.Yizxvg.TyGYgTVXhIdxrOKTRAZ__AyR6gs");

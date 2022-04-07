@@ -1,0 +1,49 @@
+{
+	"users": [
+		{
+			"id": "417824497375379456",
+			"audio": "mete.ogg",
+			"name": "fabri"
+		},
+		{
+			"id": "160069607204323329",
+			"audio": "coitado.ogg",
+			"name": "gabigol"
+		},
+		{
+			"id": "437336300207603732",
+			"audio": "essencia.ogg",
+			"name": "leleco"
+		},
+		{
+			"id": "341034590950916097",
+			"audio": "juninho.ogg",
+			"name": "amauri"
+		},
+		{
+			"id": "332651608016158720",
+			"audio": "miau.ogg",
+			"name": "rafa"
+		},
+		{
+			"id": "402578159762931725",
+			"audio": "comedia.ogg",
+			"name": "pedro"
+		},
+		{
+			"id": "285144574186487819",
+			"audio": "estranho_1.ogg",
+			"name": "xavin"
+		},
+		{
+			"id": "285144574186487819",
+			"audio": "eae_by_leleco.ogg",
+			"name": "gordin"
+		},
+		{
+			"id": "276053825675329548",
+			"audio": "assalto.ogg",
+			"name": "rogi"
+		}
+	]
+}
